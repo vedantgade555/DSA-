@@ -1,0 +1,717 @@
+**** IMP CONCEPTS *****
+ 1. int mid = lo + (hi - lo) / 2;  // it will be used to avoid integer overflow error
+
+
+
+
+
+
+
+
+
+
+
+============================================================================================================================================================
+
+
+Given an array of integers nums which is sorted in ascending order, and an integer target, write a function to search target in nums. If target exists, then return its index. Otherwise, return -1.
+
+You must write an algorithm with O(log n) runtime complexity.
+
+ 
+
+Example 1:
+
+Input: nums = [-1,0,3,5,9,12], target = 9
+Output: 4
+Explanation: 9 exists in nums and its index is 4  
+Example 2:
+
+Input: nums = [-1,0,3,5,9,12], target = 2
+Output: -1
+Explanation: 2 does not exist in nums so return -1
+
+=>
+
+	class Solution {
+    public int search(int[] arr, int target) {
+        int n = arr.length;
+        int lo=0,hi=n-1;
+
+        while(lo<=hi)
+        {
+            int mid = (lo+hi)/2;
+            if(arr[mid]==target) return mid;
+            else if(arr[mid]<target) lo=mid+1;
+            else hi=mid-1;
+        }
+        return -1;
+    }
+}
+
+
+
+=========================================================================================================================================================
+
+
+# First Occurence
+
+
+Given a sorted array arr[] and an integer k, find the position(0-based indexing) at which k is present in the array using binary search. If k doesn't exist in arr[] return -1. 
+
+Note: If multiple occurrences are there, please return the smallest index.
+
+Examples:
+
+Input: arr[] = [1, 2, 3, 4, 5], k = 4
+Output: 3
+Explanation: 4 appears at index 3.
+Input: arr[] = [11, 22, 33, 44, 55], k = 445
+Output: -1
+Explanation: 445 is not present.
+Input: arr[] = [1, 1, 1, 1, 2], k = 1
+Output: 0
+Explanation: 1 appears at index 0.
+
+
+==>
+
+class Solution {
+    public int firstSearch(int[] arr, int tar) {
+        int lo = 0, hi = arr.length - 1, idx = -1;
+
+        while (lo <= hi) {
+            int mid = lo + (hi - lo) / 2;
+
+            if (arr[mid] > tar) {
+                hi = mid - 1;
+            } else if (arr[mid] < tar) {
+                lo = mid + 1;
+            } else {
+                idx = mid;
+                hi = mid - 1; 
+            }
+        }
+        return idx;
+    }
+}
+
+============================================================================================================================================================
+
+# Find First and Last Occurence
+
+Given an array of integers nums sorted in non-decreasing order, find the starting and ending position of a given target value.
+
+If target is not found in the array, return [-1, -1].
+
+You must write an algorithm with O(log n) runtime complexity.
+
+ 
+
+Example 1:
+
+Input: nums = [5,7,7,8,8,10], target = 8
+Output: [3,4]
+Example 2:
+
+Input: nums = [5,7,7,8,8,10], target = 6
+Output: [-1,-1]
+Example 3:
+
+Input: nums = [], target = 0
+Output: [-1,-1]
+ 
+
+
+==>
+
+
+class Solution {
+    
+    public int[] searchRange(int[] nums, int target) {
+        int first = findFirst(nums, target);
+        int last = findLast(nums, target);
+
+        return new int[]{first, last};
+    }
+
+    private int findFirst(int[] nums, int target) {
+        int low = 0, high = nums.length - 1;
+        int ans = -1;
+
+        while (low <= high) {
+            int mid = low + (high - low) / 2;
+
+            if (nums[mid] == target) {
+                ans = mid;
+                high = mid - 1; // search left part
+            } 
+            else if (nums[mid] < target) {
+                low = mid + 1;
+            } 
+            else {
+                high = mid - 1;
+            }
+        }
+
+        return ans;
+    }
+
+    private int findLast(int[] nums, int target) {
+        int low = 0, high = nums.length - 1;
+        int ans = -1;
+
+        while (low <= high) {
+            int mid = low + (high - low) / 2;
+
+            if (nums[mid] == target) {
+                ans = mid;
+                low = mid + 1; // search right part
+            } 
+            else if (nums[mid] < target) {
+                low = mid + 1;
+            } 
+            else {
+                high = mid - 1;
+            }
+        }
+
+        return ans;
+    }
+}
+
+
+============================================================================================================================================================
+
+You are given an integer mountain array arr of length n where the values increase to a peak element and then decrease.
+
+Return the index of the peak element.
+
+Your task is to solve it in O(log(n)) time complexity.
+
+ 
+
+Example 1:
+
+Input: arr = [0,1,0]
+
+Output: 1
+
+Example 2:
+
+Input: arr = [0,2,1,0]
+
+Output: 1
+
+Example 3:
+
+Input: arr = [0,10,5,2]
+
+Output: 1
+
+ 
+
+==>
+	class Solution {
+    public int peakIndexInMountainArray(int[] arr) {
+        int lo = 0;
+        int hi = arr.length - 1;
+
+        while (lo < hi) {
+            int mid = lo + (hi - lo) / 2;
+
+            if (arr[mid] < arr[mid + 1]) {
+                lo = mid + 1;
+            } else {
+                hi = mid;
+            }
+        }
+
+        return lo;
+    }
+}
+
+============================================================================================================================================================
+
+Given a sorted array arr[] and an integer x, find the index (0-based) of the largest element in arr[] that is less than or equal to x. This element is called the floor of x. If such an element does not exist, return -1.
+
+Note: In case of multiple occurrences of floor of x, return the index of the last occurrence.
+
+Examples
+
+Input: arr[] = [1, 2, 8, 10, 10, 12, 19], x = 5
+Output: 1
+Explanation: Largest number less than or equal to 5 is 2, whose index is 1.
+Input: arr[] = [1, 2, 8, 10, 10, 12, 19], x = 11
+Output: 4
+Explanation: Largest Number less than or equal to 11 is 10, whose indices are 3 and 4. The index of last occurrence is 4.
+Input: arr[] = [1, 2, 8, 10, 10, 12, 19], x = 0
+Output: -1
+Explanation: No element less than or equal to 0 is found. So, output is -1.
+
+
+==>
+
+class Solution {
+    public int findFloor(int[] arr, int x) {
+        int lo = 0, hi = arr.length - 1;
+        int ans = -1;
+
+        while (lo <= hi) {
+            int mid = lo + (hi - lo) / 2; 
+
+            if (arr[mid] <= x) {
+                ans = mid;      // possible floor
+                lo = mid + 1;   // search for a larger floor / last occurrence
+            } else {
+                hi = mid - 1;
+            }
+        }
+
+        return ans;
+    }
+}
+
+============================================================================================================================================================
+
+2529. Maximum Count of Positive Integer and Negative Integer
+Solved
+Easy
+Topics
+premium lock icon
+Companies
+Hint
+Given an array nums sorted in non-decreasing order, return the maximum between the number of positive integers and the number of negative integers.
+
+In other words, if the number of positive integers in nums is pos and the number of negative integers is neg, then return the maximum of pos and neg.
+Note that 0 is neither positive nor negative.
+
+ 
+
+Example 1:
+
+Input: nums = [-2,-1,-1,1,2,3]
+Output: 3
+Explanation: There are 3 positive integers and 3 negative integers. The maximum count among them is 3.
+Example 2:
+
+Input: nums = [-3,-2,-1,0,0,1,2]
+Output: 3
+Explanation: There are 2 positive integers and 3 negative integers. The maximum count among them is 3.
+Example 3:
+
+Input: nums = [5,20,66,1314]
+Output: 4
+Explanation: There are 4 positive integers and 0 negative integers. The maximum count among them is 4
+
+
+==>
+
+class Solution {
+    public int maximumCount(int[] nums) {
+        int n = nums.length;
+
+        // First index where value >= 0
+        int neg = lowerBound(nums, 0);
+
+        // First index where value > 0
+        int pos = n - upperBound(nums, 0);
+
+        return Math.max(neg, pos);
+    }
+
+    private int lowerBound(int[] nums, int target) {
+        int lo = 0, hi = nums.length;
+
+        while (lo < hi) {
+            int mid = lo + (hi - lo) / 2;
+
+            if (nums[mid] < target)
+                lo = mid + 1;
+            else
+                hi = mid;
+        }
+
+        return lo;
+    }
+
+    private int upperBound(int[] nums, int target) {
+        int lo = 0, hi = nums.length;
+
+        while (lo < hi) {
+            int mid = lo + (hi - lo) / 2;
+
+            if (nums[mid] <= target)
+                lo = mid + 1;
+            else
+                hi = mid;
+        }
+
+        return lo;
+    }
+}
+
+----------------------------------------------------------------------------------
+																												
+O(n)
+
+
+class Solution {
+    public int maximumCount(int[] nums) {
+        int pos = 0, neg = 0;
+
+        for (int num : nums) {
+            if (num > 0) pos++;
+            else if (num < 0) neg++;
+        }
+
+        return Math.max(pos, neg);
+    }
+}
+
+
+
+
+============================================================================================================================================================
+
+
+69. Sqrt(x)
+Given a non-negative integer x, return the square root of x rounded down to the nearest integer. The returned integer should be non-negative as well.
+
+You must not use any built-in exponent function or operator.
+
+For example, do not use pow(x, 0.5) in c++ or x ** 0.5 in python.
+ 
+
+Example 1:
+
+Input: x = 4
+Output: 2
+Explanation: The square root of 4 is 2, so we return 2.
+Example 2:
+
+Input: x = 8
+Output: 2
+Explanation: The square root of 8 is 2.82842..., and since we round it down to the nearest integer, 2 is returned.
+
+
+==>
+
+class Solution {
+    public int mySqrt(int n) {
+       int root = 0;
+       for(int i=1;i<=n;i++)
+       {
+        if(i*i>n) break;
+        root = i;
+       }
+       return root;
+    }
+}
+
+
+# Using Binary Search
+
+class Solution {
+  public:
+    int floorSqrt(int n) {
+        int lo=1,hi=n;
+        while(lo<=hi)
+        {
+            int mid=(lo+hi)/2;
+            if(mid*mid == n) return mid;
+            else if(mid*mid > n)= hi=mid-1;
+            else lo = mid+1;
+        }
+        return hi;
+    }
+}
+
+
+============================================================================================================================================================
+
+540. Single Element in a Sorted Array
+Medium
+Topics
+premium lock icon
+Companies
+You are given a sorted array consisting of only integers where every element appears exactly twice, except for one element which appears exactly once.
+
+Return the single element that appears only once.
+
+Your solution must run in O(log n) time and O(1) space.
+
+ 
+
+Example 1:
+
+Input: nums = [1,1,2,3,3,4,4,8,8]
+Output: 2
+Example 2:
+
+Input: nums = [3,3,7,7,10,11,11]
+Output: 10
+
+
+==>
+
+class Solution {
+    public int singleNonDuplicate(int[] nums) {
+        int lo = 0;
+        int hi = nums.length - 1;
+
+        while (lo < hi) {
+            int mid = lo + (hi - lo) / 2;
+
+            if (mid % 2 == 1) {
+                mid--;
+            }
+
+            if (nums[mid] == nums[mid + 1]) {
+                lo = mid + 2;
+            } else {
+                hi = mid;
+            }
+        }
+
+        return nums[lo];
+    }
+}
+
+
+============================================================================================================================================================
+
+
+
+540. Single Element in a Sorted Array
+
+You are given a sorted array consisting of only integers where every element appears exactly twice, except for one element which appears exactly once.
+
+Return the single element that appears only once.
+
+Your solution must run in O(log n) time and O(1) space.
+
+ 
+
+Example 1:
+
+Input: nums = [1,1,2,3,3,4,4,8,8]
+Output: 2
+Example 2:
+
+Input: nums = [3,3,7,7,10,11,11]
+Output: 10
+
+==>
+
+class Solution {
+    public int singleNonDuplicate(int[] arr) {
+        int n = arr.length;
+        if(arr.length == 1)return arr[0];
+        if(arr[0]!=arr[1]) return arr[0];
+        if(arr[n-1]!=arr[n-2]) return arr[n-1];
+        int lo=0,hi=arr.length-1;
+
+        while(lo<=hi)
+        {
+            int mid = lo+(hi-lo)/2;
+            if(arr[mid]!=arr[mid-1] && arr[mid]!=arr[mid+1]) return arr[mid];
+            int f = mid,s=mid;
+            if(arr[mid-1]==arr[mid]) f=mid-1;
+            else s=mid+1;
+            int leftCount = f-lo;
+            int rightCount = hi-s;
+            if(leftCount%2 == 0) lo=s+1;
+            else hi=f-1;
+        }
+        return 0;
+    }
+}
+
+============================================================================================================================================================
+
+
+leetcode :  441. Arranging Coins
+
+
+
+class Solution {
+    public int arrangeCoins(int n) {
+        long lo = 0;
+        long hi = n;
+
+        while (lo <= hi) {
+            long mid = lo + (hi - lo) / 2;
+
+            long coinsNeeded = mid * (mid + 1) / 2;
+
+            if (coinsNeeded == n) {
+                return (int) mid;
+            } else if (coinsNeeded < n) {
+                lo = mid + 1;
+            } else {
+                hi = mid - 1;
+            }
+        }
+
+        return (int) hi;
+    }
+}
+
+============================================================================================================================================================
+
+33. Search in Rotated Sorted Array
+Solved
+Medium
+Topics
+premium lock icon
+Companies
+There is an integer array nums sorted in ascending order (with distinct values).
+
+Prior to being passed to your function, nums is possibly left rotated at an unknown index k (1 <= k < nums.length) such that the resulting array is [nums[k], nums[k+1], ..., nums[n-1], nums[0], nums[1], ..., nums[k-1]] (0-indexed). For example, [0,1,2,4,5,6,7] might be left rotated by 3 indices and become [4,5,6,7,0,1,2].
+
+Given the array nums after the possible rotation and an integer target, return the index of target if it is in nums, or -1 if it is not in nums.
+
+You must write an algorithm with O(log n) runtime complexity.
+
+ 
+
+Example 1:
+
+Input: nums = [4,5,6,7,0,1,2], target = 0
+Output: 4
+Example 2:
+
+Input: nums = [4,5,6,7,0,1,2], target = 3
+Output: -1
+Example 3:
+
+Input: nums = [1], target = 0
+Output: -1
+
+
+==>
+
+
+class Solution {
+    public int search(int[] nums, int target) {
+        int lo = 0;
+        int hi = nums.length - 1;
+
+        while (lo <= hi) {
+            int mid = lo + (hi - lo) / 2;
+
+            if (nums[mid] == target) {
+                return mid;
+            }
+
+            // Left half is sorted
+            if (nums[lo] <= nums[mid]) {
+                if (target >= nums[lo] && target < nums[mid]) {
+                    hi = mid - 1;
+                } else {
+                    lo = mid + 1;
+                }
+            }
+            // Right half is sorted
+            else {
+                if (target > nums[mid] && target <= nums[hi]) {
+                    lo = mid + 1;
+                } else {
+                    hi = mid - 1;
+                }
+            }
+        }
+
+        return -1;
+    }
+}
+
+
+
+============================================================================================================================================================
+
+
+
+# Search in 2D Matrix:
+
+
+class Solution {
+    public boolean searchMatrix(int[][] matrix, int target) {
+        int m = matrix.length;
+        int n = matrix[0].length;
+
+        int lo = 0;
+        int hi = m * n - 1;
+
+        while (lo <= hi) {
+            int mid = lo + (hi - lo) / 2;
+
+            int row = mid / n;
+            int col = mid % n;
+
+            int val = matrix[row][col];
+
+            if (val == target) {
+                return true;
+            } else if (val < target) {
+                lo = mid + 1;
+            } else {
+                hi = mid - 1;
+            }
+        }
+
+        return false;
+    }
+}
+
+============================================================================================================================================================
+
+
+
+1539. Kth Missing Positive Number
+Hint
+Given an array arr of positive integers sorted in a strictly increasing order, and an integer k.
+
+Return the kth positive integer that is missing from this array.
+
+ 
+
+Example 1:
+
+Input: arr = [2,3,4,7,11], k = 5
+Output: 9
+Explanation: The missing positive integers are [1,5,6,8,9,10,12,13,...]. The 5th missing positive integer is 9.
+Example 2:
+
+Input: arr = [1,2,3,4], k = 2
+Output: 6
+Explanation: The missing positive integers are [5,6,7,...]. The 2nd missing positive integer is 6.
+
+
+
+==>
+
+class Solution {
+    public int findKthPositive(int[] arr, int k) {
+        int lo = 0;
+        int hi = arr.length - 1;
+
+        while (lo <= hi) {
+            int mid = lo + (hi - lo) / 2;
+
+            int missing = arr[mid] - (mid + 1);
+
+            if (missing < k) {
+                lo = mid + 1;
+            } else {
+                hi = mid - 1;
+            }
+        }
+
+        return lo + k;
+    }
+}
+
+
+
