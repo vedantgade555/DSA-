@@ -2,17 +2,21 @@ package Strings;
 
 public class TowerOfHanoi {
     public static void main(String[] args) {
-        hanoi(4,"A","B","C");
-
+        hanoi(4, "A", "B", "C");
     }
 
-    private static void hanoi(int n, String a, String b, String c) {
-        if(n==0) return;
-        // n-1 disk from A TO B Via C
-        hanoi(n-1,a,b,c);
-        // largest from A to C
-        System.out.println(a+"->"+c);
-        hanoi(n-1,b,a,c);
+    private static void hanoi(int n, String source, String helper, String destination) {
+        if (n == 0) {
+            return;
+        }
 
+        // Move n-1 disks from source to helper using destination
+        hanoi(n - 1, source, destination, helper);
+
+        // Move largest disk from source to destination
+        System.out.println(source + " -> " + destination);
+
+        // Move n-1 disks from helper to destination using source
+        hanoi(n - 1, helper, source, destination);
     }
 }
