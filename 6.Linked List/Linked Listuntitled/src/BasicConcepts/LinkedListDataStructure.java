@@ -111,12 +111,20 @@ class LinkedList{
         }
 
         Node temp = head;
-        for (int i = 1; i <= idx; i++) {
+        for (int i = 1; i < idx; i++) {
             temp = temp.next;
         }
         temp.next = temp.next.next; // delete
         if(idx == size - 1) tail = temp;
         size--;
+    }
+
+    int get(int idx){
+        Node temp = head;
+        for (int i = 1; i <= idx; i++) {
+            temp = temp.next;
+        }
+        return temp.val;
     }
 
 }
@@ -147,5 +155,9 @@ public class LinkedListDataStructure {
 
         ll.delete(2);
         ll.display();
+
+        System.out.println(ll.get(2));
+
+
     }
 }

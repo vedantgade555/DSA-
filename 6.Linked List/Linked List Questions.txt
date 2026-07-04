@@ -1,0 +1,424 @@
+876. Middle of the Linked List
+Easy
+Topics
+premium lock icon
+Companies
+Given the head of a singly linked list, return the middle node of the linked list.
+
+If there are two middle nodes, return the second middle node.
+
+ 
+Example 1:
+
+
+Input: head = [1,2,3,4,5]
+Output: [3,4,5]
+Explanation: The middle node of the list is node 3.
+Example 2:
+
+
+Input: head = [1,2,3,4,5,6]
+Output: [4,5,6]
+Explanation: Since the list has two middle nodes with values 3 and 4, we return the second one
+
+==>
+SOLUTION I
+
+class Solution {
+    public ListNode middleNode(ListNode head) {
+
+        int length = 0;
+        ListNode temp = head;
+
+        while (temp != null) {
+            length++;
+            temp = temp.next;
+        }
+
+        temp = head;
+
+        for (int i = 1; i <= length / 2; i++) {
+            temp = temp.next;
+        }
+
+        return temp;
+    }
+}
+
+SOLUTION II (SLOW FAST APPROACH)
+
+class Solution {
+    public ListNode middleNode(ListNode head) {
+        ListNode slow = head;
+        ListNode fast = head;
+
+        while(fast!=null && fast.next!=null )
+        {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        return slow;
+    }
+}
+
+
+============================================================================================================================================================
+
+
+2095. Delete the Middle Node of a Linked List
+Medium
+Topics
+premium lock icon
+Companies
+Hint
+You are given the head of a linked list. Delete the middle node, and return the head of the modified linked list.
+
+The middle node of a linked list of size n is the ⌊n / 2⌋th node from the start using 0-based indexing, where ⌊x⌋ denotes the largest integer less than or equal to x.
+
+For n = 1, 2, 3, 4, and 5, the middle nodes are 0, 1, 1, 2, and 2, respectively.
+ 
+
+Example 1:
+
+
+Input: head = [1,3,4,7,1,2,6]
+Output: [1,3,4,1,2,6]
+Explanation:
+The above figure represents the given linked list. The indices of the nodes are written below.
+Since n = 7, node 3 with value 7 is the middle node, which is marked in red.
+We return the new list after removing this node. 
+Example 2:
+
+
+Input: head = [1,2,3,4]
+Output: [1,2,4]
+Explanation:
+The above figure represents the given linked list.
+For n = 4, node 2 with value 3 is the middle node, which is marked in red.
+Example 3:
+
+
+Input: head = [2,1]
+Output: [2]
+Explanation:
+The above figure represents the given linked list.
+For n = 2, node 1 with value 1 is the middle node, which is marked in red.
+Node 0 with value 2 is the only node remaining after removing node 1
+
+
+===>
+
+class Solution {
+    public ListNode deleteMiddle(ListNode head) {
+
+        // If there is only one node, return null
+        if (head == null || head.next == null) {
+            return null;
+        }
+
+        ListNode slow = head;
+        ListNode fast = head;
+        ListNode prev = null;
+
+        while (fast != null && fast.next != null) {
+            prev = slow;
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+
+        // Delete the middle node
+        prev.next = slow.next;
+
+        return head;
+    }
+}
+
+============================================================================================================================================================
+
+Input: head: 1->2->3->4->5->6->7->8->9, k = 2
+Output: 8
+Explanation: 
+
+The given linked list is 1->2->3->4->5->6->7->8->9. The 2nd node from end is 8.
+Input: head: 10->5->100->5, k = 5
+Output: -1
+Explanation: 
+
+The given linked list is 10->5->100->5. Since 'k' is more than the number of nodes, the output is -1.
+
+
+==>
+
+class Solution {
+    public int getKthFromLast(Node head, int k) {
+
+        Node temp = head;
+        int len = 0;
+
+        while (temp != null) {
+            len++;
+            temp = temp.next;
+        }
+
+        if (k > len) {
+            return -1;
+        }
+
+        temp = head;
+        int idx = len - k;
+
+        for (int i = 1; i <= idx; i++) {
+            temp = temp.next;
+        }
+
+        return temp.data;
+    }
+}
+
+
+(SLOW FAST APPROACT)
+
+class Solution {
+    public int getKthFromLast(Node head, int k) {   
+        Node slow = head;
+        Node fast = head;
+        
+        for(int i=1;i<=k;i++)
+        {
+            if(fast == null) return -1;
+            fast = fast.next;
+        }
+        
+        while(fast!=null){
+            slow = slow.next;
+            fast = fast.next;
+        }
+        return slow.data;
+    }
+} 
+
+
+============================================================================================================================================================
+
+19. Remove Nth Node From End of List
+Medium
+Topics
+premium lock icon
+Companies
+Hint
+Given the head of a linked list, remove the nth node from the end of the list and return its head.
+
+ 
+
+Example 1:
+
+
+Input: head = [1,2,3,4,5], n = 2
+Output: [1,2,3,5]
+Example 2:
+
+Input: head = [1], n = 1
+Output: []
+Example 3:
+
+Input: head = [1,2], n = 1
+Output: [1]
+
+==>
+
+class Solution {
+    public ListNode removeNthFromEnd(ListNode head, int n) {
+
+        // If there is only one node
+        if (head.next == null) {
+            return null;
+        }
+
+        ListNode fast = head;
+        ListNode slow = head;
+        ListNode prev = null;
+
+        // Move fast n steps ahead
+        for (int i = 1; i <= n; i++) {
+            fast = fast.next;
+        }
+
+        // If fast becomes null, remove the head
+        if (fast == null) {
+            return head.next;
+        }
+
+        // Move both pointers
+        while (fast != null) {
+            prev = slow;
+            slow = slow.next;
+            fast = fast.next;
+        }
+
+        // Delete the node
+        prev.next = slow.next;
+
+        return head;
+    }
+}
+
+
+============================================================================================================================================================
+
+1721. Swapping Nodes in a Linked List
+Medium
+Topics
+premium lock icon
+Companies
+Hint
+You are given the head of a linked list, and an integer k.
+
+Return the head of the linked list after swapping the values of the kth node from the beginning and the kth node from the end (the list is 1-indexed).
+
+ 
+
+Example 1:
+
+
+Input: head = [1,2,3,4,5], k = 2
+Output: [1,4,3,2,5]
+Example 2:
+
+Input: head = [7,9,6,6,7,8,3,0,9,5], k = 5
+Output: [7,9,6,6,8,7,3,0,9,5]
+
+
+==>
+
+class Solution {
+    public ListNode swapNodes(ListNode head, int k) {
+
+        ListNode fast = head;
+        ListNode first = head;
+
+        // Move first to the kth node from the beginning
+        for (int i = 1; i < k; i++) {
+            first = first.next;
+        }
+
+        // Move fast k steps ahead
+        fast = first;
+        while (fast.next != null) {
+            fast = fast.next;
+            head = head.next;
+        }
+
+        // head is now the kth node from the end
+        int temp = first.val;
+        first.val = head.val;
+        head.val = temp;
+
+        return head;
+    }
+}
+
+
+============================================================================================================================================================
+
+160. Intersection of Two Linked Lists
+Easy
+Topics
+premium lock icon
+Companies
+Given the heads of two singly linked-lists headA and headB, return the node at which the two lists intersect. If the two linked lists have no intersection at all, return null.
+
+For example, the following two linked lists begin to intersect at node c1:
+
+
+The test cases are generated such that there are no cycles anywhere in the entire linked structure.
+
+Note that the linked lists must retain their original structure after the function returns.
+
+Custom Judge:
+
+The inputs to the judge are given as follows (your program is not given these inputs):
+
+intersectVal - The value of the node where the intersection occurs. This is 0 if there is no intersected node.
+listA - The first linked list.
+listB - The second linked list.
+skipA - The number of nodes to skip ahead in listA (starting from the head) to get to the intersected node.
+skipB - The number of nodes to skip ahead in listB (starting from the head) to get to the intersected node.
+The judge will then create the linked structure based on these inputs and pass the two heads, headA and headB to your program. If you correctly return the intersected node, then your solution will be accepted.
+
+ 
+
+Example 1:
+
+
+Input: intersectVal = 8, listA = [4,1,8,4,5], listB = [5,6,1,8,4,5], skipA = 2, skipB = 3
+Output: Intersected at '8'
+Explanation: The intersected node's value is 8 (note that this must not be 0 if the two lists intersect).
+From the head of A, it reads as [4,1,8,4,5]. From the head of B, it reads as [5,6,1,8,4,5]. There are 2 nodes before the intersected node in A; There are 3 nodes before the intersected node in B.
+- Note that the intersected node's value is not 1 because the nodes with value 1 in A and B (2nd node in A and 3rd node in B) are different node references. In other words, they point to two different locations in memory, while the nodes with value 8 in A and B (3rd node in A and 4th node in B) point to the same location in memory.
+Example 2:
+
+
+Input: intersectVal = 2, listA = [1,9,1,2,4], listB = [3,2,4], skipA = 3, skipB = 1
+Output: Intersected at '2'
+Explanation: The intersected node's value is 2 (note that this must not be 0 if the two lists intersect).
+From the head of A, it reads as [1,9,1,2,4]. From the head of B, it reads as [3,2,4]. There are 3 nodes before the intersected node in A; There are 1 node before the intersected node in B.
+Example 3:
+
+
+Input: intersectVal = 0, listA = [2,6,4], listB = [1,5], skipA = 3, skipB = 2
+Output: No intersection
+Explanation: From the head of A, it reads as [2,6,4]. From the head of B, it reads as [1,5]. Since the two lists do not intersect, intersectVal must be 0, while skipA and skipB can be arbitrary values.
+Explanation: The two lists do not intersect, so return null.
+
+
+==>
+
+public class Solution {
+    public ListNode getIntersectionNode(ListNode h1, ListNode h2) {
+
+        ListNode t1 = h1;
+        ListNode t2 = h2;
+
+        int l1 = 0;
+        int l2 = 0;
+
+        while (t1 != null) {
+            l1++;
+            t1 = t1.next;
+        }
+
+        while (t2 != null) {
+            l2++;
+            t2 = t2.next;
+        }
+
+        t1 = h1;
+        t2 = h2;
+
+        if (l1 > l2) {
+
+            for (int i = 0; i < l1 - l2; i++) {
+                t1 = t1.next;
+            }
+
+        } else {
+
+            for (int i = 0; i < l2 - l1; i++) {
+                t2 = t2.next;
+            }
+
+        }
+
+        while (t1 != t2) {
+            t1 = t1.next;
+            t2 = t2.next;
+        }
+
+        return t1;
+    }
+}
+
+
+============================================================================================================================================================
+
+
