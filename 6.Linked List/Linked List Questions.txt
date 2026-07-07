@@ -1,3 +1,9 @@
+PATTERNS IN LINKED LIST
+1. Slow Fast
+2. 
+
+
+============================================================================================================================================================
 876. Middle of the Linked List
 Easy
 Topics
@@ -318,6 +324,39 @@ class Solution {
 }
 
 
+
+class Solution {
+    public ListNode swapNodes(ListNode head, int k) {
+
+        ListNode first = head;
+
+        // Move to kth node from beginning
+        for(int i = 1; i < k; i++) {
+            first = first.next;
+        }
+
+        ListNode second = head;
+        ListNode temp = first;
+
+        // Find kth node from end
+        while(temp.next != null) {
+            temp = temp.next;
+            second = second.next;
+        }
+
+        int val = first.val;
+        first.val = second.val;
+        second.val = val;
+
+        return head;
+    }
+}
+
+============================================================================================================================================================
+
+
+
+
 ============================================================================================================================================================
 
 160. Intersection of Two Linked Lists
@@ -420,5 +459,176 @@ public class Solution {
 
 
 ============================================================================================================================================================
+
+
+
+141. Linked List Cycle
+
+==>
+
+public class Solution {
+    public boolean hasCycle(ListNode head) {
+        ListNode fast = head;
+        ListNode slow = head;
+
+        while(fast!=null && fast.next!=null && fast.next.next!=null){
+            slow = slow.next;
+            fast = fast.next.next;
+            if(fast == slow) return true;
+        }
+
+        return false;
+    }
+}
+
+
+============================================================================================================================================================
+
+142. Linked List Cycle II
+
+==>
+
+public class Solution {
+    public ListNode detectCycle(ListNode head) {
+        ListNode slow = head;
+        ListNode fast = head;
+
+        // Detect cycle
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+
+            if (slow == fast) {
+                // Find cycle start
+                ListNode temp = head;
+
+                while (temp != slow) {
+                    temp = temp.next;
+                    slow = slow.next;
+                }
+
+                return temp;
+            }
+        }
+
+        return null;
+    }
+}
+
+============================================================================================================================================================
+
+
+83. Remove Duplicates from Sorted List 
+ we will uses a sliding windows concept for solve this problem
+==>
+
+class Solution {
+    public ListNode deleteDuplicates(ListNode head) {
+        if (head == null) return null;
+
+        ListNode i = head;
+        ListNode j = head;
+
+        while (j != null) {
+            if (i.val == j.val) {
+                j = j.next;
+            } else {
+                i.next = j;
+                i = j;
+            }
+        }
+
+        i.next = null;
+        return head;
+    }
+}
+
+============================================================================================================================================================
+
+https://leetcode.com/problems/remove-duplicates-from-sorted-list-ii/
+
+
+==>
+
+class Solution {
+    public ListNode deleteDuplicates(ListNode head) {
+        ListNode dummy = new ListNode(-1);
+        ListNode t = dummy;
+        ListNode i = head;
+
+        while(i!=null)
+        {
+            if(i.next==null || i.val != i.next.val)
+            {
+                t.next  =i;
+                t=i;
+                i = i.next;
+            }else{ // i.val == i.next.val
+                ListNode j = i.next;
+                while(j!=null && j.val == i.val)
+                {
+                    j=j.next;
+                }
+                i=j;
+            }
+
+        }
+        t.next = i;
+        return dummy.next;
+    }
+}
+
+============================================================================================================================================================
+
+61. Rotate List
+
+
+==>
+
+class Solution {
+    public int length(ListNode head) {
+        int len = 0;
+        ListNode temp = head;
+        while (temp != null) {
+            temp = temp.next;
+            len++;
+        }
+        return len;
+    }
+
+    public ListNode rotateRight(ListNode head, int k) {
+        if (head == null || head.next == null) return head;
+
+        int n = length(head);
+        k %= n;
+
+        if (k == 0) return head;
+
+        ListNode slow = head;
+        ListNode fast = head;
+
+        // Move fast k nodes ahead
+        for (int i = 0; i < k; i++) {
+            fast = fast.next;
+        }
+
+        // Move until fast reaches the last node
+        while (fast.next != null) {
+            slow = slow.next;
+            fast = fast.next;
+        }
+
+        ListNode newHead = slow.next;
+        slow.next = null;
+        fast.next = head;
+
+        return newHead;
+    }
+}
+
+
+============================================================================================================================================================
+
+2326. Spiral Matrix IV
 
 
