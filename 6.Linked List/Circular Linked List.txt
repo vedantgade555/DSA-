@@ -1,0 +1,61 @@
+Circular Linked List Traversal
+
+
+
+class Solution {
+    public void printList(Node head) {
+        System.out.print(head.data+" ");
+        Node temp = head.next;
+        
+        while(temp!=head){
+            System.out.print(temp.data+" ");
+            temp=temp.next;
+        }
+    }
+}
+
+==============================================================================================================================================================
+
+deletion and reverse in circular linked list(GFG)
+
+==>
+Node deleteNode(Node head, int key){
+
+    if(head == null)
+        return null;
+
+    if(head.next == head){
+        if(head.data == key)
+            return null;
+        return head;
+    }
+
+    Node tail = head;
+
+    while(tail.next != head)
+        tail = tail.next;
+
+    tail.next = null;
+
+    if(head.data == key){
+        head = head.next;
+        tail.next = head;
+        return head;
+    }
+
+    Node prev = head;
+    Node curr = head.next;
+
+    while(curr != null){
+        if(curr.data == key){
+            prev.next = curr.next;
+            break;
+        }
+        prev = curr;
+        curr = curr.next;
+    }
+
+    tail.next = head;
+
+    return head;
+}
