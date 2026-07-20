@@ -17,28 +17,6 @@ class Solution {
 
 ============================================================================================================================================================
 876. Middle of the Linked List
-Easy
-Topics
-premium lock icon
-Companies
-Given the head of a singly linked list, return the middle node of the linked list.
-
-If there are two middle nodes, return the second middle node.
-
- 
-Example 1:
-
-
-Input: head = [1,2,3,4,5]
-Output: [3,4,5]
-Explanation: The middle node of the list is node 3.
-Example 2:
-
-
-Input: head = [1,2,3,4,5,6]
-Output: [4,5,6]
-Explanation: Since the list has two middle nodes with values 3 and 4, we return the second one
-
 ==>
 SOLUTION I
 
@@ -82,47 +60,7 @@ class Solution {
 
 ============================================================================================================================================================
 
-
 2095. Delete the Middle Node of a Linked List
-Medium
-Topics
-premium lock icon
-Companies
-Hint
-You are given the head of a linked list. Delete the middle node, and return the head of the modified linked list.
-
-The middle node of a linked list of size n is the ⌊n / 2⌋th node from the start using 0-based indexing, where ⌊x⌋ denotes the largest integer less than or equal to x.
-
-For n = 1, 2, 3, 4, and 5, the middle nodes are 0, 1, 1, 2, and 2, respectively.
- 
-
-Example 1:
-
-
-Input: head = [1,3,4,7,1,2,6]
-Output: [1,3,4,1,2,6]
-Explanation:
-The above figure represents the given linked list. The indices of the nodes are written below.
-Since n = 7, node 3 with value 7 is the middle node, which is marked in red.
-We return the new list after removing this node. 
-Example 2:
-
-
-Input: head = [1,2,3,4]
-Output: [1,2,4]
-Explanation:
-The above figure represents the given linked list.
-For n = 4, node 2 with value 3 is the middle node, which is marked in red.
-Example 3:
-
-
-Input: head = [2,1]
-Output: [2]
-Explanation:
-The above figure represents the given linked list.
-For n = 2, node 1 with value 1 is the middle node, which is marked in red.
-Node 0 with value 2 is the only node remaining after removing node 1
-
 
 ===>
 
@@ -219,28 +157,6 @@ class Solution {
 ============================================================================================================================================================
 
 19. Remove Nth Node From End of List
-Medium
-Topics
-premium lock icon
-Companies
-Hint
-Given the head of a linked list, remove the nth node from the end of the list and return its head.
-
- 
-
-Example 1:
-
-
-Input: head = [1,2,3,4,5], n = 2
-Output: [1,2,3,5]
-Example 2:
-
-Input: head = [1], n = 1
-Output: []
-Example 3:
-
-Input: head = [1,2], n = 1
-Output: [1]
 
 ==>
 
@@ -284,27 +200,6 @@ class Solution {
 ============================================================================================================================================================
 
 1721. Swapping Nodes in a Linked List
-Medium
-Topics
-premium lock icon
-Companies
-Hint
-You are given the head of a linked list, and an integer k.
-
-Return the head of the linked list after swapping the values of the kth node from the beginning and the kth node from the end (the list is 1-indexed).
-
- 
-
-Example 1:
-
-
-Input: head = [1,2,3,4,5], k = 2
-Output: [1,4,3,2,5]
-Example 2:
-
-Input: head = [7,9,6,6,7,8,3,0,9,5], k = 5
-Output: [7,9,6,6,8,7,3,0,9,5]
-
 
 ==>
 
@@ -372,56 +267,6 @@ class Solution {
 ============================================================================================================================================================
 
 160. Intersection of Two Linked Lists
-Easy
-Topics
-premium lock icon
-Companies
-Given the heads of two singly linked-lists headA and headB, return the node at which the two lists intersect. If the two linked lists have no intersection at all, return null.
-
-For example, the following two linked lists begin to intersect at node c1:
-
-
-The test cases are generated such that there are no cycles anywhere in the entire linked structure.
-
-Note that the linked lists must retain their original structure after the function returns.
-
-Custom Judge:
-
-The inputs to the judge are given as follows (your program is not given these inputs):
-
-intersectVal - The value of the node where the intersection occurs. This is 0 if there is no intersected node.
-listA - The first linked list.
-listB - The second linked list.
-skipA - The number of nodes to skip ahead in listA (starting from the head) to get to the intersected node.
-skipB - The number of nodes to skip ahead in listB (starting from the head) to get to the intersected node.
-The judge will then create the linked structure based on these inputs and pass the two heads, headA and headB to your program. If you correctly return the intersected node, then your solution will be accepted.
-
- 
-
-Example 1:
-
-
-Input: intersectVal = 8, listA = [4,1,8,4,5], listB = [5,6,1,8,4,5], skipA = 2, skipB = 3
-Output: Intersected at '8'
-Explanation: The intersected node's value is 8 (note that this must not be 0 if the two lists intersect).
-From the head of A, it reads as [4,1,8,4,5]. From the head of B, it reads as [5,6,1,8,4,5]. There are 2 nodes before the intersected node in A; There are 3 nodes before the intersected node in B.
-- Note that the intersected node's value is not 1 because the nodes with value 1 in A and B (2nd node in A and 3rd node in B) are different node references. In other words, they point to two different locations in memory, while the nodes with value 8 in A and B (3rd node in A and 4th node in B) point to the same location in memory.
-Example 2:
-
-
-Input: intersectVal = 2, listA = [1,9,1,2,4], listB = [3,2,4], skipA = 3, skipB = 1
-Output: Intersected at '2'
-Explanation: The intersected node's value is 2 (note that this must not be 0 if the two lists intersect).
-From the head of A, it reads as [1,9,1,2,4]. From the head of B, it reads as [3,2,4]. There are 3 nodes before the intersected node in A; There are 1 node before the intersected node in B.
-Example 3:
-
-
-Input: intersectVal = 0, listA = [2,6,4], listB = [1,5], skipA = 3, skipB = 2
-Output: No intersection
-Explanation: From the head of A, it reads as [2,6,4]. From the head of B, it reads as [1,5]. Since the two lists do not intersect, intersectVal must be 0, while skipA and skipB can be arbitrary values.
-Explanation: The two lists do not intersect, so return null.
-
-
 ==>
 
 public class Solution {
@@ -557,8 +402,7 @@ class Solution {
 
 ============================================================================================================================================================
 
-https://leetcode.com/problems/remove-duplicates-from-sorted-list-ii/
-
+82. Remove Duplicates from Sorted List II
 
 ==>
 
@@ -1309,3 +1153,139 @@ class Solution {
 }
 
 ============================================================================================================================================================
+
+138. Copy List with Random Pointer
+
+class Solution {
+
+    public Node deepCopy(Node head1) {
+        Node temp1 = head1;
+        Node head2 = new Node(-1);
+        Node temp2 = head2;
+
+        while (temp1 != null) {
+            Node t = new Node(temp1.val);
+            temp2.next = t;
+            temp1 = temp1.next;
+            temp2 = temp2.next;
+        }
+        return head2.next;
+    }
+
+    public Node merge(Node head1, Node head2) {
+        Node dummy = new Node(-1);
+        Node temp = dummy;
+        Node temp1 = head1;
+        Node temp2 = head2;
+
+        while (temp1 != null && temp2 != null) {
+
+            temp.next = temp1;
+            temp1 = temp1.next;
+            temp = temp.next;
+
+            temp.next = temp2;
+            temp2 = temp2.next;
+            temp = temp.next;
+        }
+
+        return dummy.next;
+    }
+
+    public void randomConnections(Node head1, Node head2) {
+        Node temp1 = head1;
+
+        while (temp1 != null) {
+            Node temp2 = temp1.next;
+
+            if (temp1.random == null)
+                temp2.random = null;
+            else
+                temp2.random = temp1.random.next;
+
+            temp1 = temp2.next;
+        }
+    }
+
+    public Node split(Node head1) {
+
+        Node dummy1 = new Node(-1);
+        Node temp1 = dummy1;
+
+        Node dummy2 = new Node(-1);
+        Node temp2 = dummy2;
+
+        Node temp = head1;
+
+        while (temp != null) {
+
+            temp1.next = temp;
+            temp1 = temp1.next;
+            temp = temp.next;
+
+            if (temp != null) {
+                temp2.next = temp;
+                temp2 = temp2.next;
+                temp = temp.next;
+            }
+        }
+
+        temp1.next = null;
+        temp2.next = null;
+
+        return dummy2.next;
+    }
+
+    public Node copyRandomList(Node head1) {
+
+        if (head1 == null)
+            return null;
+
+        // Step1: Creating Deep copy without random
+        Node head2 = deepCopy(head1);
+
+        // Step2: Alternatively connecting lists
+        head1 = merge(head1, head2);
+
+        // Step3: Assigning Random Pointers
+        randomConnections(head1, head2);
+
+        // Step4: Split the List
+        head2 = split(head1);
+
+        return head2;
+    }
+}
+
+
+
+==>
+(USING HASHMAP)
+
+
+class Solution {
+    public Node copyRandomList(Node head) {
+
+        if (head == null) return null;
+
+        HashMap<Node, Node> map = new HashMap<>();
+
+        Node temp = head;
+
+        while (temp != null) {
+            map.put(temp, new Node(temp.val));
+            temp = temp.next;
+        }
+
+        temp = head;
+
+        while (temp != null) {
+            map.get(temp).next = map.get(temp.next);
+            map.get(temp).random = map.get(temp.random);
+            temp = temp.next;
+        }
+
+        return map.get(head);
+    }
+}
+

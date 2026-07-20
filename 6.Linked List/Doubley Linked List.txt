@@ -19,4 +19,153 @@ class Solution {
     }
 }
 
-==============================================================================================================================================================
+
+==>
+
+class Solution {
+    public DLLNode reverseDLL(DLLNode head) {
+        DLLNode temp = null;
+        DLLNode curr = head;
+
+        while (curr != null) {
+            temp = curr.prev;
+            curr.prev = curr.next;
+            curr.next = temp;
+            curr = curr.prev;   // move to next node (original next)
+        }
+
+        if (temp != null)
+            head = temp.prev;
+
+        return head;
+    }
+}
+
+============================================================================================================================================================
+
+430. Flatten a Multilevel Doubly Linked List
+
+
+==>
+
+/*
+// Definition for a Node.
+class Node {
+    public int val;
+    public Node prev;
+    public Node next;
+    public Node child;
+};
+*/
+
+class Solution {
+
+    public Node flatten(Node head) {
+        if (head == null) return null;
+
+        dfs(head);
+        return head;
+    }
+
+    private Node dfs(Node head) {
+        Node curr = head;
+        Node last = null;
+
+        while (curr != null) {
+            Node next = curr.next;
+
+            if (curr.child != null) {
+                Node childHead = curr.child;
+                Node childTail = dfs(childHead);
+
+                // Connect current node with child
+                curr.next = childHead;
+                childHead.prev = curr;
+                curr.child = null;
+
+                // Connect child tail with next node
+                if (next != null) {
+                    childTail.next = next;
+                    next.prev = childTail;
+                }
+
+                last = childTail;
+            } else {
+                last = curr;
+            }
+
+            curr = next;
+        }
+
+        return last;
+    }
+}
+
+
+==>
+(My Solution)
+
+
+class Solution {
+
+    public Node flatten(Node head) {
+        if(head == null) return head;
+       Node curr = head;
+       while(curr!=null){
+        if(curr.child == null) curr = curr.next;
+        else{
+            Node fwd = curr.next;
+            Node c = flatten(curr.child);
+            curr.child = null;
+            curr.next = c;
+            c.prev = curr;
+            Node temp = c;
+            while(temp.next!=null) temp = temp.next;
+            temp.next = fwd;
+            if(fwd!=null)fwd.prev = temp;
+            curr = fwd;
+        }
+       }
+       return head;
+    }
+}
+
+============================================================================================================================================================
+
+2058. Find the Minimum and Maximum Number of Nodes Between Critical Points
+
+==>
+class Solution {
+    public int[] nodesBetweenCriticalPoints(ListNode head) {
+        int[] ans = {-1,-1};
+        int idx = 1,firstIdx = -1,lastIdx = -1,minDist = Integer.MAX_VALUE;
+
+        ListNode a = head;
+        ListNode b = a.next;
+        ListNode c = b.next;
+
+        if(c==null) return ans; // 2 size ki LL
+
+        while(c!=null){
+            // check for critical point
+            if((b.val > a.val && b.val > c.val) || (b.val < a.val && b.val < c.val)){
+                if(firstIdx == -1) firstIdx = idx;
+                if(lastIdx!=-1) {
+                    int dist  =idx - lastIdx;
+                    minDist = Math.min(dist,minDist);
+                }
+                lastIdx = idx;
+            }
+            idx++;
+            a = a.next;
+            b = b.next;
+            c = c.next;
+        }
+       int maxDist = lastIdx - firstIdx;
+        if(maxDist==0) maxDist = -1;
+        if(minDist == Integer.MAX_VALUE) minDist = -1;
+        ans[0] = minDist;
+        ans[1] = maxDist;
+        return ans;
+    }
+}
